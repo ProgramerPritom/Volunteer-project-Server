@@ -56,9 +56,20 @@ async function run() {
             res.send(result);
           })
           app.get('/eventbooked', async(req,res) => {
-            const query = {};
+            const email = req.query.email;
+            // console.log(email);
+            const query = {email: email};
+            // const query = {}
             const cursor = eventCollection.find(query);
             const result = await cursor.toArray();
+            res.send(result);
+          })
+
+          // Delete from databease
+          app.delete('/eventbooked/:id', async(req,res) => {
+            const id = req.params.id;
+            const query = {_id: ObjectId(id)};
+            const result = await eventCollection.deleteOne(query);
             res.send(result);
           })
     }
